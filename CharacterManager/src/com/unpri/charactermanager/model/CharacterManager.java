@@ -1,4 +1,3 @@
-
 package com.unpri.charactermanager.model;
 
 import java.util.ArrayList;
@@ -60,6 +59,24 @@ public class CharacterManager {
     // Menghitung jumlah karakter
     public int getTotalCharacters() {
         return characterList.size();
+    }
+
+    /**
+     * Menghitung jumlah karakter berdasarkan tipe.
+     *
+     * @param type tipe karakter yang ingin dihitung
+     * @return jumlah karakter dengan tipe tersebut
+     */
+    public int countByType(CharacterType type) {
+        int count = 0;
+
+        for (Character character : characterList) {
+            if (character.getType() == type) {
+                count++;
+            }
+        }
+
+        return count;
     }
 
     // Mengembalikan salinan daftar karakter
