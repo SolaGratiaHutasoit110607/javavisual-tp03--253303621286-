@@ -10,13 +10,13 @@ public class Character {
     private int attackPower;
     private int mana;
 
-    // Constructor 1: nilai HP dan attack ditentukan otomatis
+    // Constructor 1: HP dan attack dihitung otomatis
     public Character(String name, CharacterType type, int level) {
         this(name, type, level, 100 + (level * 10),
                 10 + (level * 5));
     }
 
-    // Constructor 2: nilai HP dan attack ditentukan sendiri
+    // Constructor 2: HP dan attack ditentukan sendiri
     public Character(String name, CharacterType type, int level,
                      int hitPoints, int attackPower) {
         this.name = name;
@@ -72,7 +72,7 @@ public class Character {
         this.attackPower = attackPower;
     }
 
-    // MINI-CHALLENGE: Getter dan setter mana
+    // Getter dan setter mana
     public int getMana() {
         return mana;
     }
@@ -82,11 +82,10 @@ public class Character {
             throw new IllegalArgumentException(
                     "Mana tidak boleh negatif");
         }
-
         this.mana = mana;
     }
 
-    // MINI-CHALLENGE: Memeriksa apakah karakter masih hidup
+    // Memeriksa apakah karakter masih hidup
     public boolean isAlive() {
         return hitPoints > 0;
     }
@@ -102,5 +101,26 @@ public class Character {
                 ", attackPower=" + attackPower +
                 ", mana=" + mana +
                 '}';
+    }
+
+    // Membandingkan dua karakter berdasarkan nama
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Character)) {
+            return false;
+        }
+
+        Character other = (Character) obj;
+        return this.name != null && this.name.equals(other.name);
+    }
+
+    // hashCode harus konsisten dengan equals
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(name);
     }
 }

@@ -1,54 +1,45 @@
-
 package com.unpri.charactermanager;
 
 import com.unpri.charactermanager.model.Character;
 import com.unpri.charactermanager.model.CharacterType;
+import com.unpri.charactermanager.model.CharacterManager;
 
 public class Main {
-
     public static void main(String[] args) {
 
-        // BAGIAN A: Data karakter
-        System.out.println("=== CHARACTER MANAGER ===");
-        System.out.println("\n--- DATA KARAKTER ---");
+        System.out.println("=== Character Manager v0.2 — CRUD Test ===\n");
 
-        Character odette = new Character(
-                "Odette", CharacterType.MAGE, 4);
+        CharacterManager manager = new CharacterManager();
 
-        Character angela = new Character(
-                "Angela", CharacterType.HEALER, 5);
+        // 1. Tambah beberapa karakter
+        manager.addCharacter(new Character("Arjuna", CharacterType.WARRIOR, 5));
+        manager.addCharacter(new Character("Merlin", CharacterType.MAGE, 3));
+        manager.addCharacter(new Character("Athena", CharacterType.ARCHER, 4));
 
-        Character layla = new Character(
-                "Layla", CharacterType.ARCHER, 10);
+        // 2. Coba tambah DUPLIKAT nama — seharusnya DITOLAK
+        System.out.println();
+        manager.addCharacter(new Character("Arjuna", CharacterType.HEALER, 1));
 
-        System.out.println(odette);
-        System.out.println(angela);
-        System.out.println(layla);
+        // 3. Tampilkan total karakter
+        System.out.println("\nTotal karakter saat ini: " + manager.getTotalCharacters());
 
-        // BAGIAN A: Demo level up
-        System.out.println("\n--- DEMO LEVEL UP ---");
+        // 4. Cari karakter
+        System.out.println("\n--- Pencarian ---");
+        Character hasil = manager.findByName("Merlin");
+        System.out.println(hasil != null ? "Ditemukan: " + hasil : "Tidak ditemukan");
 
-        System.out.println("Sebelum: " + odette);
+        Character tidakAda = manager.findByName("Zeus");
+        System.out.println(tidakAda != null ? "Ditemukan: " + tidakAda : "Zeus tidak ditemukan (sesuai harapan)");
 
-        odette.setLevel(odette.getLevel() + 1);
-        odette.setHitPoints(odette.getHitPoints() + 10);
-        odette.setAttackPower(odette.getAttackPower() + 5);
+        // 5. Hapus karakter
+        System.out.println("\n--- Penghapusan ---");
+        manager.removeCharacter("Athena");
+        System.out.println("Total setelah hapus: " + manager.getTotalCharacters());
 
-        System.out.println("Sesudah: " + odette);
-
-        // BAGIAN B: Mini-challenge
-        System.out.println("\n--- MINI-CHALLENGE ---");
-
-        Character newHero = new Character(
-                "Knight", CharacterType.WARRIOR, 3);
-
-        newHero.setMana(80);
-
-        System.out.println("Karakter baru: " + newHero);
-        System.out.println("Mana Knight: " + newHero.getMana());
-        System.out.println(
-                "Knight masih hidup? " + newHero.isAlive());
-
-        System.out.println("\n=== PROGRAM SELESAI ===");
+        // 6. Tampilkan semua karakter yang tersisa
+        System.out.println("\n--- Daftar Karakter Tersisa ---");
+        for (Character c : manager.getAllCharacters()) {
+            System.out.println(c);
+        }
     }
 }
